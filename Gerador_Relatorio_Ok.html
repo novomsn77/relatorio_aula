@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório de Aula</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #fff;
+            background-color: #4CAF50;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            color: #333;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .row div {
+            flex: 1;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #388E3C;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Gerar PDF</h1>
+    <form id="pdfForm">
+        <label for="youtubeLink">Link do YouTube:</label>
+        <input type="url" id="youtubeLink" required>
+
+        <div class="row">
+            <div>
+                <label for="aulaTipo">Tipo de Aula:</label>
+                <select id="aulaTipo" required>
+                    <option value="">Selecione o tipo de aula</option>
+                    <option value="Gravada">Gravada</option>
+                    <option value="Transmitida">Transmitida</option>
+                </select>
+            </div>
+            <div>
+                <label for="serie">Série:</label>
+                <select id="serie" required>
+                    <option value="">Selecione a Série</option>
+                    <option value="1ª Série Integral">1ª Série Integral</option>
+                    <option value="2ª Série Integral">2ª Série Integral</option>
+                    <option value="3ª Série Integral">3ª Série Integral</option>
+		    <option value="3ª Série Parcial">3ª Série Parcial | Parcial</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label for="nomeProfessor">Nome do Professor:</label>
+                <select id="nomeProfessor" required>
+                    <option value="">Selecione o Professor</option>
+                    <option value="Adriano Ramalho">Adriano Ramalho</option>
+                    <option value="Alexsando Kesller">Alexsando Kesller</option>
+                    <option value="Alcides Fernandes">Alcides Fernandes</option>
+                    <option value="Érica Ramos">Érica Ramos</option>
+                    <option value="Erik Soares">Erik Soares</option>
+                    <option value="Fernando Galvão">Fernando Galvão</option>
+                    <option value="Fernando Santos">Fernando Santos</option>
+                    <option value="Flávio Coelho">Flávio Coelho</option>
+                    <option value="Hamanda Soares">Hamanda Soares</option>
+                    <option value="Keury Campelo">Keury Campelo</option>
+                    <option value="Lauryanna Queiroz">Lauryanna Queiroz</option>
+                    <option value="Mac Dowell">Mac Dowell</option>
+                    <option value="Matheus Estevan">Matheus Estevan</option>
+                    <option value="Tércio Câmara">Tércio Câmara</option>
+                </select>
+            </div>
+            <div>
+                <label for="disciplina">Disciplina:</label>
+                <select id="disciplina" required>
+                    <option value="">Selecione a Disciplina</option>
+                    <option value="Artes">Artes</option>
+                    <option value="Biologia">Biologia</option>
+                    <option value="Educação Física">Educação Física</option>
+                    <option value="Educação Financeira">Educação Financeira</option>
+                    <option value="Ensino Religioso">Ensino Religioso</option>
+                    <option value="Filosofia">Filosofia</option>
+                    <option value="Física">Física</option>
+                    <option value="Geografia">Geografia</option>
+                    <option value="História">História</option>
+                    <option value="Inglês">Inglês</option>
+                    <option value="Língua Portuguesa - Análise Linguista">Língua Portuguesa - Análise Linguista</option>
+                    <option value="Língua Portuguesa - Literatura">Língua Portuguesa - Literatura</option>
+                    <option value="Matemática">Matemática</option>
+                    <option value="Redação">Redação</option>
+                    <option value="Sociologia">Sociologia</option>
+                    <option value="Sociologia - Filosofia">Sociologia - Filosofia</option>
+                    <option value="Química">Química</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label for="data">Data:</label>
+                <input type="date" id="data" required>
+            </div>
+            <div>
+                <label for="turno">Turno:</label>
+                <select id="turno" required>
+                    <option value="">Selecione</option>
+                    <option value="Manhã">Manhã</option>
+                    <option value="Tarde">Tarde</option>
+                    <option value="Noite">Noite</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div>
+                <label for="canal">Canal IPTV:</label>
+                <select id="canal" required>
+                    <option value="">Selecione o Canal</option>
+                    <option value="IPTV 1">IPTV 1</option>
+                    <option value="IPTV 2">IPTV 2</option>
+                    <option value="IPTV 3">IPTV 3</option>
+                    <option value="IPTV 4">IPTV 4</option>
+                    <option value="IPTV 5">IPTV 5</option>
+                    <option value="IPTV 6">IPTV 6</option>
+                    <option value="IPTV 7">IPTV 7</option>
+                    <option value="IPTV 8">IPTV 8</option>
+                    <option value="IPTV 9">IPTV 9</option>
+                </select>
+            </div>
+            <div>
+                <label for="estudio">Estúdio:</label>
+                <select id="estudio" required>
+                    <option value="">Selecione o Estúdio</option>
+                    <option value="Estúdio 1">Estúdio 1</option>
+                    <option value="Estúdio 2">Estúdio 2</option>
+                    <option value="Estúdio 3">Estúdio 3</option>
+                    <option value="Estúdio 4">Estúdio 4</option>
+                    <option value="Estúdio 5">Estúdio 5</option>
+                    <option value="Estúdio 6">Estúdio 6</option>
+                    <option value="Estúdio 7">Estúdio 7</option>
+                    <option value="Estúdio 8">Estúdio 8</option>
+                    <option value="Estúdio 9">Estúdio 9</option>
+                </select>
+            </div>
+        </div>
+
+        <label for="nomeDiretor">Nome do Diretor:</label>
+        <select id="nomeDiretor" required>
+            <option value="">Selecione o Diretor</option>
+            <option value="Anderson">Anderson</option>
+            <option value="Antonio Junior">Antonio Junior</option>
+            <option value="Bruno">Bruno</option>
+            <option value="Daniel">Daniel</option>
+            <option value="Daniel Fonseca">Daniel Fonseca</option>
+            <option value="Fernando">Fernando</option>
+            <option value="Flavilton">Flavilton</option>
+            <option value="Gilberto">Gilberto</option>
+            <option value="Jackson">Jackson</option>
+            <option value="Janaina">Janaina</option>
+            <option value="Jorge">Jorge</option>
+            <option value="Junior">Junior</option>
+            <option value="Marcus">Marcus</option>
+            <option value="Mariana">Mariana</option>
+            <option value="Mayolly">Mayolly</option>
+            <option value="Renan">Renan</option>
+            <option value="Thiago">Thiago</option>
+            <option value="Tony">Tony</option>
+            <option value="Yara">Yara</option>
+        </select>
+
+        <label for="observacoes">Observações:</label>
+        <textarea id="observacoes" placeholder="Digite observações importantes"></textarea>
+
+        <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+    </form>
+</div>
+
+<script>
+function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Cabeçalho
+    doc.setFillColor(46, 204, 113);
+    doc.rect(10, 10, 190, 20, 'F');
+    doc.setFontSize(18);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text("Relatório de Aula", 105, 22, { align: "center" });
+
+    let yOffset = 40;
+    doc.setFontSize(12);
+    doc.setTextColor(0, 0, 0);
+
+    const formData = [
+	{ title: "Data", value: document.getElementById("data").value },
+	{ title: "Série", value: document.getElementById("serie").value },
+	{ title: "Turno", value: document.getElementById("turno").value },
+        { title: "Tipo de Aula", value: document.getElementById("aulaTipo").value },
+        { title: "Diretor", value: document.getElementById("nomeDiretor").value },
+        { title: "Professor", value: document.getElementById("nomeProfessor").value },
+        { title: "Disciplina", value: document.getElementById("disciplina").value },
+	{ title: "Estúdio", value: document.getElementById("estudio").value },
+        { title: "Canal IPTV", value: document.getElementById("canal").value },
+
+    ];
+
+    formData.forEach(field => {
+        doc.setFont('helvetica', 'bold');
+        doc.text(field.title + ":", 10, yOffset);
+        doc.setFont('helvetica', 'normal');
+        doc.text(field.value || "Não informado", 60, yOffset);
+        yOffset += 6;
+    });
+
+    // Link do YouTube (tornando clicável)
+    const youtubeLink = document.getElementById("youtubeLink").value;
+    if (youtubeLink) {
+        doc.setFont('helvetica', 'bold'),
+        doc.text("Link do YouTube:", 10, yOffset);
+        doc.setFont('helvetica', 'normal');
+        doc.link(60, yOffset - 2, 140, 10, { url: youtubeLink });
+        doc.text(youtubeLink, 60, yOffset);
+        yOffset += 10;
+    } 
+    // Observações em uma caixa separada
+    doc.setDrawColor(2,141,211);
+    doc.rect(10, yOffset + 5, 190, 30);
+    doc.text("Observações:", 15, yOffset + 12);
+    doc.text(document.getElementById("observacoes").value || "Nenhuma", 15, yOffset + 20);
+
+    doc.save('relatorio_aula.pdf');
+}
+</script>
+
+</body>
+</html>
